@@ -50,7 +50,6 @@ public class TextEditor extends JFrame implements ActionListener {
         userSaveAs.addActionListener(this);
         userExit.addActionListener(this);
 
-
         textArea = new JTextArea();
         textArea.setPreferredSize(new Dimension(600,600));
         textArea.setLineWrap(true);
@@ -59,10 +58,8 @@ public class TextEditor extends JFrame implements ActionListener {
         textArea.setBorder(BorderFactory.createBevelBorder(1));
         textArea.setForeground(Color.black);
         textArea.setFont(new Font ("Times New Roman",Font.BOLD, 12));
+        textArea.setText("");
 
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setPreferredSize(new Dimension(600,600));
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         userFontSize.setPreferredSize(new Dimension(50,50));
         userFontSize.setValue(initialFontSize);
@@ -79,10 +76,15 @@ public class TextEditor extends JFrame implements ActionListener {
         userFonts.addActionListener(this);
         userFonts.setSelectedItem("Times New Roman");
 
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setEnabled(true);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setViewportView(textArea);
+
         this.add(userColors);
         this.add(userFonts);
         this.add(userFontSize);
-        this.add(scrollPane);
+        this.add(scrollPane, BorderLayout.CENTER);
         this.setVisible(true);
     }
 
