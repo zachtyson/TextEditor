@@ -10,8 +10,8 @@ public class TextEditor extends JFrame implements ActionListener {
 
     JTextArea textArea;
     JTextArea newTextArea;
-    JButton selectButton = new JButton();
- //   JButton saveButton = new JButton();
+    JButton selectButton = new JButton("Select");
+    JButton saveButton = new JButton("Save");
 
     TextEditor() {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -21,22 +21,25 @@ public class TextEditor extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
 
         selectButton.addActionListener(this);
+        saveButton.addActionListener(this);
 
         this.add(selectButton);
+        this.add(saveButton);
 
         textArea = new JTextArea();
         textArea.setPreferredSize(new Dimension(600,600));
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
-        new JTextArea();
+        textArea.setBackground(new Color(200,200,200));
+        textArea.setBorder(BorderFactory.createBevelBorder(1));
+        textArea.setForeground(Color.black);
+        textArea.setFont(new Font ("Times New Roman",Font.BOLD, 12));
 
-      //  newTextArea = readFile("output");
-      //  if(newTextArea != null) {
-     //       textArea.setText(newTextArea.getText());
-     //   }
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setPreferredSize(new Dimension(600,600));
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         this.add(textArea);
-        this.pack();
         this.setVisible(true);
     }
 
@@ -49,9 +52,16 @@ public class TextEditor extends JFrame implements ActionListener {
             if(response == JFileChooser.APPROVE_OPTION) {
                 File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
                 newTextArea = readFile(file);
-                if(newTextArea != null) {
-                    textArea.setText(newTextArea.getText());
-                }
+                System.out.println(file);
+
+            }
+        }
+        if (e.getSource() == saveButton) {
+            JFileChooser fileChooser = new JFileChooser();
+            int response = fileChooser.showSaveDialog(null);
+            if(response == JFileChooser.APPROVE_OPTION) {
+                File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+                saveFile(file, textArea.getText());
             }
         }
     }
@@ -72,4 +82,14 @@ public class TextEditor extends JFrame implements ActionListener {
         }
         return newText;
     }
+    public void saveFile(File file, String textAreaString) {
+        try {
+            FileWriter writer = new FileWriter(file);
+            writer.write(textAreaString);
+            writer.close();
+        } catch (IOException a) {
+            System.out.println("Something wrong");
+        }
+    }
+
 }
