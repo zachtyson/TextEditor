@@ -149,7 +149,7 @@ public class TextEditor extends JFrame implements ActionListener {
 
     }
 
-    public static JTextArea readFile(File fileName) {
+    public static JTextArea readFile(File fileName) { //Reads the text files
 
         JTextArea newText = new JTextArea();
         try {
@@ -166,7 +166,7 @@ public class TextEditor extends JFrame implements ActionListener {
         }
         return newText;
     }
-    public void saveFile(File file, String textAreaString) {
+    public void saveFile(File file, String textAreaString) { //Literally overwrites what was previously saved, careful saving
         try {
             FileWriter writer = new FileWriter(file);
             writer.write(textAreaString);
